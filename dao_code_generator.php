@@ -101,7 +101,7 @@
 				$query = str_replace("--where--",getWhereClause($paramValue),$query);
 				return $this->db->exec($query, getQparameters($paramValue));
 			}else{
-				$query = '.$selectById.';
+				$query = "'.$selectById.'";
 				return $this->db->exec($query,array(1=>$key));
 			}
 		}
@@ -126,7 +126,7 @@
 			}
 		
 			$result = "{
-				"message" : "$errStr"
+				\"message\" : \"$errStr\"
 			}";
 			return $result;
 		}
@@ -142,7 +142,7 @@
 			}
 		
 			$result = "{
-				"message" : "$errStr"
+				\"message\" : \"$errStr\"
 			}";
 			return $result;
 		}
@@ -158,16 +158,18 @@
 			}
 			
 			$result = "{
-				"message" : "$errStr"
+				\"message\" : \"$errStr\"
 			}";
 			return $result;
 		}
-			
+	
 		';
-		
-		$file = fopen(CLASS_NAME.".php","w");
-		echo fwrite($file,$fileData);
-		fclose($file);
 	}
+	
+	$fileData .= "}";
+	
+	$file = fopen(CLASS_NAME.".php","w");
+	echo fwrite($file,$fileData);
+	fclose($file);
 	
 ?>
