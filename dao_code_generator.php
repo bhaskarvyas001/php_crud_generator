@@ -47,7 +47,7 @@
 		$insertElements = "";
 		$updateElements = "";
 		$insertQuery = "insert into $tableToDescribe (";
-		$updateQuery = "update $tableToDescribe ";
+		$updateQuery = "update $tableToDescribe set ";
 		$deleteQuery = "delete from $tableToDescribe where `id` = ?";
 		$selectQuery = "select * from $tableToDescribe --where-- and `isactive` = 'Y' --orderby-- limit ?,?";
 		$countQuery = "select count(1) as total from $tableToDescribe --where-- and `isactive` = 'Y'";
@@ -66,7 +66,7 @@
 				$updateElements .= $tempStr;
 				
 				$insertQuery .= "`".$column['Field']."`, ";
-				$updateQuery .= "set `".$column['Field']."` = ?, ";
+				$updateQuery .= "`".$column['Field']."` = ?, ";
 			}
 		}
 		
@@ -79,6 +79,7 @@
 		$updateElements .= "->id"; 
 		
 		//update the insert query with question marks
+		$insertQuery = rtrim($insertQuery, ", ");
 		$insertQuery .= ") values (";
 		for ($i = 0; $i < sizeof($result)-1; $i++) {
 			$insertQuery .= "?, ";
